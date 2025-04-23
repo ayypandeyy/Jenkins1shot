@@ -1,0 +1,21 @@
+pipeline{
+    agent any
+    stages{
+        stage("list pwd"){
+            steps{
+               sh 'pwd ' 
+            }
+        }
+        stage("list files in pwd"){
+            steps{
+                sh 'ls '
+            }
+        }
+        stage("Create a file here"){
+            steps{
+                sh 'touch test.txt'
+                sh 'echo "Hola"> test.txt'
+            }
+        }
+    }
+}
