@@ -2,7 +2,7 @@ pipeline{
 //starting 1st node   
     agent none
     stages{
-        stage("pwd"){
+        stage("pwd-1"){
             agent{
                label 'Worker-1'
                }
