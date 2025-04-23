@@ -23,7 +23,7 @@ pipeline{
                label 'Worker-1'
                }
             steps{
-                sh 'mkdir TestDir'
+                sh 'mkdir -p TestDir'
             }
         }
         stage("Create file in that directory and write content in it"){
@@ -57,7 +57,7 @@ pipeline{
                label 'Worker-2'
                }
             steps{
-                sh 'mkdir TestDir'
+                sh 'mkdir -p TestDir'
             }
         }
         stage("Create file in that directory and write content in it-2"){
