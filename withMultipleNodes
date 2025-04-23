@@ -62,7 +62,7 @@ pipeline{
         }
         stage("Create file in that directory and write content in it-2"){
             agent{
-               label 'Worker-2'
+               label 'Worker-22'
                }
             steps{
                 sh 'touch TestDir/test.txt'
