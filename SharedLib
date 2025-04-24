@@ -39,7 +39,7 @@ pipeline{
                }
             steps{
                 sh 'touch HolaDir/test.txt'
-                sh 'echo "FromJenkins Master node" > TestDir/test.txt'
+                sh 'echo "FromJenkins Master node" > HolaDir/test.txt'
             }
         }
  //Starting 2nd node   
