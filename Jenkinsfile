@@ -15,7 +15,7 @@ pipeline{
         }
         stage("Make directory"){
             steps{
-                sh 'mkdir TestDir'
+                sh 'mkdir -p TestDir'
             }
         }
         stage("Create file in that directory and write content in it"){
