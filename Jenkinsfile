@@ -21,7 +21,7 @@ pipeline{
         stage("Create file in that directory and write content in it"){
             steps{
                 sh 'touch TestDir/test.txt'
-                sh 'echo "FromJenkins Master node using git poll" > TestDir/test.txt'
+                sh 'echo "FromJenkins Master node using git poll by making change on git" > TestDir/test.txt'
             }
         }
     }
