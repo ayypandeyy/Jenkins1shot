@@ -1,0 +1,25 @@
+---
+ - name: Install and start mysql on dbservers(linux machine) group
+   hosts: dbservers
+   become: true
+   tasks:
+
+     - name: installing mysql
+       ansible.builtin.dnf:
+         name: mariadb105-server
+         state: latest
+
+     - name: starting and enabling the service
+       ansible.builtin.service:
+         name: mariadb
+         state: started
+         enabled: true
+       register: out
+
+     - name: printing out
+       debug:
+         var: out
+
+         
+# add a db here on your own in future. this is a linux machine, I mean this will run on amazon linux 2023 VM
+
