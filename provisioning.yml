@@ -1,0 +1,40 @@
+---
+ - name: Installing ntp on all nodes
+   hosts: all
+   become: true
+   tasks:
+     - name: Install on Ubunutu - webservers
+       apt:
+         name: "{{item}}"
+         state: present
+       when: ansible_distribution == "Ubuntu"
+       loop:
+         - ntp
+         - wget
+         - zip
+         - unzip
+
+     - name: start service
+       service:
+         name: ntp
+         state: started
+       when: ansible_distribution == "Ubuntu"
+
+
+     - name: Install on Linux - dbservs
+       yum:
+         name: "{{item}}"
+         state: present
+       when: ansible_distribution == "Amazon"
+       loop:
+         - chrony
+         - wget
+         - zip
+         - unzip
+
+
+     - name: start service
+       service:
+         name: chronyd
+         state: started
+       when: ansible_distribution == "Amazon"
