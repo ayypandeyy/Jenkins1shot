@@ -1,0 +1,28 @@
+---
+ - name: Install and start apache2 on webservers group
+   hosts: webservers
+   become: true
+   vars:
+     #servicename: apache2    # commneted here, it will come from outside
+     service_state: started
+   tasks:
+
+     - name: Update apt cache
+       apt:
+         update_cache: yes
+
+     - name: installing apache2
+       ansible.builtin.apt:
+         name: "{{servicename}}"
+         state: latest
+
+     - name: starting and enabling the service
+       ansible.builtin.service:
+         name: "{{servicename}}"
+         state: "{{service_state}}"
+         enabled: true
+       register: vbles
+
+     - name: print vbles
+       debug:
+         var: vbles
