@@ -25,7 +25,7 @@ resource "aws_iam_access_key" "terraform_user_access_key" {
   user = aws_iam_user.terraform_user.name
 }
 
-# Getting secret key
+# Getting secret key, this wont show value as sesnitive = true; use this command to see the key -- "terraform output secret_access_key"
 output "secret_access_key" {
   value     = aws_iam_access_key.terraform_user_access_key.secret
   sensitive = true
