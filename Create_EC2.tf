@@ -13,16 +13,9 @@
 #   region = "us-east-1"
 # }
 
-#Create EC2 instance
-resource "aws_instance" "terraform_ec2" {
-  tags = {
-    Name = "Terraform_ec2"
-  }
-  ami             = "ami-084568db4383264d4"
-  instance_type   = "t3.micro"
-  key_name        = aws_key_pair.Terraform_EC2_KeyPair.key_name
-  user_data       = file("user_data.sh")
-  security_groups = [aws_security_group.Terraform_ec2_SecurityGP.name]
+#Getting my public IP from internet so that even it changes, it will get the correct IP
+data "http" "my_ip" {
+  url = "https://api.ipify.org"
 }
 
 #Create key pair
@@ -43,7 +36,7 @@ resource "aws_vpc_security_group_ingress_rule" "Terraform_ec2_SecurityGP_Ingress
   ip_protocol       = "TCP"
   from_port         = 22
   to_port           = 22
-  cidr_ipv4         = "122.177.98.158/32"
+  cidr_ipv4         = "${data.http.my_ip.body}/32"
 }
 
 #Create inbound rules - HTTP
@@ -53,7 +46,7 @@ resource "aws_vpc_security_group_ingress_rule" "Terraform_ec2_SecurityGP_Ingress
   ip_protocol       = "TCP"
   from_port         = 80
   to_port           = 80
-  cidr_ipv4         = "122.177.98.158/32"
+  cidr_ipv4         = "${data.http.my_ip.body}/32"
 }
 
 #Create Outbound rules - All traffic
@@ -62,4 +55,17 @@ resource "aws_vpc_security_group_egress_rule" "Terraform_ec2_SecurityGP_Engress"
   security_group_id = aws_security_group.Terraform_ec2_SecurityGP.id
   ip_protocol       = "-1"
   cidr_ipv4         = "0.0.0.0/0"
+}
+
+
+#Create EC2 instance
+resource "aws_instance" "terraform_ec2" {
+  tags = {
+    Name = "Terraform_ec2"
+  }
+  ami             = "ami-084568db4383264d4"
+  instance_type   = "t3.micro"
+  key_name        = aws_key_pair.Terraform_EC2_KeyPair.key_name
+  user_data       = file("user_data.sh")
+  security_groups = [aws_security_group.Terraform_ec2_SecurityGP.name]
 }
